@@ -1,0 +1,48 @@
+<head>
+<style>
+    th, button{
+      padding:8px
+    }
+    button {
+    margin:10px
+    }
+  </style>
+ 
+  </head>
+    
+<body>
+  
+   
+
+      <br>
+      
+      <div id="Success" class="alert alert-success" style="display: none;">
+       <strong>Operation successfull!</strong>
+      </div>
+      
+      <div id="Failure" class="alert alert-danger" style="display: none;">
+       <strong>Operation failed!</strong>
+      </div>
+      
+      <h2 style="padding-left: 35%">Student Details</h2>
+       <p style="margin:10px"><strong>NOTE:</strong>You can edit first and last name by clicking on the corresponding cell.</p>
+     
+       <div style="padding-left: 18%; padding-top: 2%">
+      <table class="table-hover table-responsive-md table-bordered table-striped table-editable" style="width:75%" id="tbl">
+        <tr>
+          <th style="text-align: center">Index</th>
+          <th style="text-align: center">First Name</th>
+          <th style="text-align: center">Last Name</th>	
+          <th style="text-align: center">Delete</th>
+          <th style="text-align: center">Update</th>			
+        </tr>	
+        <tr *ngFor="let stud of students">
+          <td style="text-align: center">{{stud.id}}</td>
+          <td contenteditable="true" style="text-align: center" id="F{{stud.id}}">{{stud.FirstName}}</td>
+          <td contenteditable="true" style="text-align: center" id="L{{stud.id}}">{{stud.LastName}}</td>
+          <td style="text-align: center"><button type="button" class="btn btn-success btn-rounded" id={{stud.id}} (click)="del(stud.id)">Delete</button></td>
+          <td style="text-align: center"><button type="button" class="btn btn-danger btn-rounded" id={{stud.id}} (click)="updt(stud.id)">Update</button></td>
+        </tr>
+        </table>
+      </div>
+</body>

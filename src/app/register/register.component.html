@@ -1,0 +1,87 @@
+<body>
+
+<div id="Invalid" class="alert alert-danger" style="display: none;">
+    <strong>Form not submitted!</strong>
+</div>
+<div id="Valid" class="alert alert-success" style="display: none;">
+    <strong>User registered successfully!</strong>
+</div>
+<div id="Error" class="alert alert-danger" style="display: none;">  
+    <strong>Error registering user!</strong>
+</div>
+
+<form #myform="ngForm" (ngSubmit)="onSubmit(myform)" class="form-horizontal" style="padding: 400px; padding-right: 400px; padding-bottom:50px; padding-top:50px">
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input required name="email" #emailid="ngModel" type="email" [(ngModel)]="model.email" class="form-control" id="email" required
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      [class.is-invalid]="(emailid.touched || emailid.dirty) && emailid.invalid"
+      [class.is-valid]="(emailid.touched || emailid.dirty) && emailid.valid">
+    </div>         
+    <div *ngIf="(emailid.touched || emailid.dirty) && emailid.errors?.email">
+      <p style="color:red">Email not in correct format! </p>
+    </div>
+    <div *ngIf="(emailid.touched || emailid.dirty) && emailid.errors?.required">
+      <p style="color:red">Email is required! </p>
+    </div>
+
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input required minlength="4" maxlength="10" #password="ngModel" name="password" type="password" [(ngModel)]="model.password" class="form-control" id="pwd" required
+      [pattern]="passwordregex" [class.is-invalid]="(password.touched || password.dirty) && password.invalid"
+      [class.is-valid]="(password.touched || password.dirty) && password.valid">
+    </div>
+    <div *ngIf="(password.touched || password.dirty) && password.errors?.minlength">
+      <p style="color:red">Password must be at least 4 characters long! </p>
+    </div>
+    <div *ngIf="(password.touched || password.dirty) && password.errors?.required">
+      <p style="color:red">Password is required! </p>
+    </div>
+    <div *ngIf="(password.touched || password.dirty) && password.errors?.pattern">
+      <p style="color:red">Password must contain at least one uppercase, one lowercase character and one digit! </p>
+    </div>
+
+    <div class="form-group">
+        <label for="pwd">Confirm Password:</label>
+        <input name="passwordconf" incorrect [(ngModel)]="model.confpassword" type="password" class="form-control" id="pwdconf" #passwordconf="ngModel" required
+        [class.is-invalid]="(passwordconf.touched || passwordconf.dirty) && passwordconf.invalid"
+        >
+    </div>  
+
+    <div *ngIf="validate(myform);">      
+    </div>
+    <p id="pwderr" style="color:red; display: none">Confirm password doesn't match entered password!</p>
+
+    <div class="checkbox">
+      <label *ngFor="let sub of model.subjects; let i = index;"
+        style="padding-right: 70px"> 
+      <input name={{sub}} [(ngModel)]="model.subjects_selected[i]" type="checkbox">{{sub}}</label>
+    </div>
+    <div class="form-group">
+        <label for="gndr" style="padding-right:50px">Gender</label>
+        <label style="padding-right:30px">
+          <input type="radio" checked="true" [(ngModel)]="model.gender" value="male" class="form-control" name="gender">Male
+          </label>        
+        <label style="padding-right:30px">
+        <input type="radio" [(ngModel)]="model.gender" value="female" class="form-control" name="gender">Female
+        </label>        
+    </div>       
+    <div>
+      <label style="padding-right:50px">City:</label>
+        <select [(ngModel)]="model.city_selected" name="city">
+          <option *ngFor="let city of model.city"
+           value="{{city}}">{{city}}</option>
+        </select>
+      </div> 
+      <div>
+        <label style="padding-right:50px">Age:</label>
+          <input type="range" min="0" max="100" value="50" [(ngModel)]="model.age" name="range">
+          <label style="padding-left:15px">{{model.age}}</label>
+      </div>
+    <div style="padding-left: 200px; padding-top: 25px">
+    <button type="submit" [disabled]="myform.invalid" class="btn btn-info">Submit</button>
+    </div>      
+    </form>
+       
+</body>
+

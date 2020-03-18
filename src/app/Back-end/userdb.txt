@@ -1,0 +1,3 @@
+use user
+db.createCollection('Login')
+db.Login.insert({'admin':'admin'});
